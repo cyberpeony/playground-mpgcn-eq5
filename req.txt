@@ -1,0 +1,13 @@
+psycopg2
+geopandas
+pandas
+shapely
+azure-storage-blob
+tqdm
+folium>=0.12
+matplotlib
+mapclassify
+ultralytics
+numpy
+pandas
+cv

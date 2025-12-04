@@ -1,0 +1,94 @@
+# ======================
+# ENTORNOS / PYTHON
+# ======================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+.venv/
+.env/
+.venv*/
+env*/
+.ipynb_checkpoints/
+.vscode/
+
+# ======================
+# EDITORES
+# ======================
+.vscode/
+.idea/
+
+# ======================
+# DATA PESADA / ARTEFACTOS
+# ======================
+
+# NPY pesados (features panorámicas)
+data/panoramic_npy/
+data/npy/
+
+# CSVs crudos de esqueletos (se pueden regenerar)
+video_processing/skeletonCSV/
+
+# Checkpoints de modelos
+checkpoints/
+
+# Vídeos
+*.mp4
+*.mov
+*.avi
+*.h264
+data/videos/
+*.jpg
+*.png
+
+
+# Otros datos grandes
+Downloads/
+Downloads_h264/
+outputs/
+refs/
+refs_grid/
+Ray/
+ray/
+resultados_rey/
+tracking/
+video-labeler/
+
+# Modelos / pesos
+*.pt
+*.pth
+*.npz
+
+# Archivos geo pesados
+*.gpkg
+
+# ======================
+# CSVs
+# ======================
+# Ignorar TODOS los .csv...
+*.csv
+# ... excepto los splits que sí queremos versionar
+!data/train.csv
+!data/val.csv
+!data/test.csv
+
+# ======================
+# IMÁGENES DE DEBUG / SALIDAS
+# ======================
+*debug*.png
+frame_*_debug.png
+*_overlay.png
+columpioscam*_overlay*.png
+
+# ======================
+# OTROS TEMPORALES
+# ======================
+tmp/
+tmp_*/
+.tmp*/
+*.log
+*.zip
+*.tar
+*.tar.gz

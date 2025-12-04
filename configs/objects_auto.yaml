@@ -1,0 +1,11 @@
+columpioscam1:
+  bench_1:
+    type: auto
+    centroid:
+    - 0.4249
+    - 0.7581
+  bench_2:
+    type: auto
+    centroid:
+    - 0.419
+    - 0.7716

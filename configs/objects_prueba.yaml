@@ -1,0 +1,9 @@
+columpioscam1:
+  zona_columpios:
+    type: risk
+    centroid: [0.5, 0.5]
+
+columpioscam3:
+  zona_resbaladilla:
+    type: play
+    centroid: [0.2, 0.3]

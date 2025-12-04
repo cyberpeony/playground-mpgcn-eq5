@@ -1,0 +1,9 @@
+[tracker]
+yoloModel = "yolov8m-pose.pt"
+trackerModel = "bytetrack.yaml"
+out_dir = "csvGenerated/"
+raw_out_dir = "csvGenerated/raw"
+k_max = 4
+joints = 17 
+fps_process = 12
+T = 48

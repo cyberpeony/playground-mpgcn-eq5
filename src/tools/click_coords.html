@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Click → coordenadas (nx, ny) + YAML</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;margin:16px;background:#0b0d10;color:#e8eef3}
+  a{color:#9bd}
+  .row{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+  .panel{background:#14181d;border:1px solid #1f2630;border-radius:12px;padding:12px;box-shadow:0 1px 10px rgba(0,0,0,.25)}
+  #wrap{position:relative;display:inline-block}
+  #img{max-width:90vw;max-height:78vh;border-radius:8px;display:block}
+  #crosshair{position:absolute;top:0;left:0;pointer-events:none}
+  .k{color:#9fb4c8}
+  .val{font-weight:600}
+  .gridToggle{margin-left:8px}
+  textarea{width:420px;height:200px;background:#0f1317;color:#e8eef3;border:1px solid #233040;border-radius:8px;padding:10px;resize:vertical}
+  button{background:#1e2936;border:1px solid #2f3d50;color:#e8eef3;border-radius:8px;padding:8px 12px;cursor:pointer}
+  button:hover{filter:brightness(1.05)}
+  .note{opacity:.75;font-size:.9em}
+  .chip{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2f3d50;background:#151b22;margin-right:8px}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  label{font-size:.95em;opacity:.9}
+</style>
+</head>
+<body>
+  <h2>Click → coordenadas normalizadas + YAML</h2>
+  <div class="controls panel">
+    <span class="chip">Usa query params:</span>
+    <code>?img=refs/columpioscam1_ref.jpg&cam=columpioscam1&name=bench_1</code>
+    <span class="note">Abriste: <span id="imgPath"></span></span>
+    <label class="gridToggle"><input type="checkbox" id="gridFine"> Rejilla 100×100</label>
+    <label class="gridToggle"><input type="checkbox" id="gridCoarse"> Rejilla 20×20</label>
+  </div>
+
+  <div class="row">
+    <div id="wrap" class="panel">
+      <img id="img" src="" alt="imagen" />
+      <canvas id="crosshair"></canvas>
+      <canvas id="grid"></canvas>
+    </div>
+
+    <div class="panel">
+      <div><span class="k">px:</span> x=<span class="val" id="pxX">—</span>, y=<span class="val" id="pxY">—</span></div>
+      <div><span class="k">nx, ny:</span> <span class="val" id="nxny">—</span></div>
+      <div class="note" style="margin:6px 0 10px">nx = x/naturalWidth, ny = y/naturalHeight</div>
+      <textarea id="yamlOut" spellcheck="false"></textarea>
+      <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+        <button id="copyBtn">Copiar YAML</button>
+        <button id="copyPairBtn">Copiar (nx, ny)</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+function qs(k, def=""){ return new URLSearchParams(location.search).get(k) ?? def; }
+
+const imgEl = document.getElementById('img');
+const cross = document.getElementById('crosshair');
+const grid = document.getElementById('grid');
+const pxX = document.getElementById('pxX');
+const pxY = document.getElementById('pxY');
+const nxny = document.getElementById('nxny');
+const yamlOut = document.getElementById('yamlOut');
+const copyBtn = document.getElementById('copyBtn');
+const copyPairBtn = document.getElementById('copyPairBtn');
+const gridFine = document.getElementById('gridFine');
+const gridCoarse = document.getElementById('gridCoarse');
+const imgPathSpan = document.getElementById('imgPath');
+
+const imgPath = qs('img','refs/columpioscam1_ref.jpg');
+const cam = qs('cam','columpioscam1');
+const name = qs('name','obj_1');
+imgPathSpan.textContent = imgPath;
+
+imgEl.src = imgPath;
+imgEl.addEventListener('load', () => {
+  layoutCanvases();
+  drawGrid();
+});
+
+function layoutCanvases(){
+  const rect = imgEl.getBoundingClientRect();
+  [cross, grid].forEach(cv => {
+    cv.width = rect.width;
+    cv.height = rect.height;
+    cv.style.width = rect.width + 'px';
+    cv.style.height = rect.height + 'px';
+    cv.style.left = imgEl.offsetLeft + 'px';
+    cv.style.top = imgEl.offsetTop + 'px';
+  });
+}
+
+function drawCross(rx, ry){
+  const ctx = cross.getContext('2d');
+  ctx.clearRect(0,0,cross.width,cross.height);
+  ctx.strokeStyle = 'rgba(255,64,64,0.95)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(rx-12, ry); ctx.lineTo(rx+12, ry);
+  ctx.moveTo(rx, ry-12); ctx.lineTo(rx, ry+12);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(rx, ry, 3, 0, Math.PI*2);
+  ctx.fillStyle = 'rgba(255,64,64,0.95)';
+  ctx.fill();
+}
+
+function drawGrid(){
+  const g = grid.getContext('2d');
+  g.clearRect(0,0,grid.width,grid.height);
+  const rect = imgEl.getBoundingClientRect();
+  const W = rect.width, H = rect.height;
+
+  if(gridFine.checked){
+    const step = W/100; const stepY = H/100;
+    g.strokeStyle = 'rgba(255,255,255,0.25)'; g.lineWidth = 1;
+    for(let x=0; x<=W; x+=step){ g.beginPath(); g.moveTo(x,0); g.lineTo(x,H); g.stroke(); }
+    for(let y=0; y<=H; y+=stepY){ g.beginPath(); g.moveTo(0,y); g.lineTo(W,y); g.stroke(); }
+  }
+  if(gridCoarse.checked){
+    const step = W/20; const stepY = H/20;
+    g.strokeStyle = 'rgba(255,255,255,0.7)'; g.lineWidth = 2;
+    for(let x=0; x<=W; x+=step){ g.beginPath(); g.moveTo(x,0); g.lineTo(x,H); g.stroke(); }
+    for(let y=0; y<=H; y+=stepY){ g.beginPath(); g.moveTo(0,y); g.lineTo(W,y); g.stroke(); }
+  }
+}
+
+gridFine.addEventListener('change', drawGrid);
+gridCoarse.addEventListener('change', drawGrid);
+window.addEventListener('resize', () => { layoutCanvases(); drawGrid(); });
+
+imgEl.addEventListener('click', ev => {
+  const rect = imgEl.getBoundingClientRect();
+  // posición del click en la imagen renderizada (en CSS px)
+  const rx = ev.clientX - rect.left;
+  const ry = ev.clientY - rect.top;
+
+  drawCross(rx, ry);
+
+  // convertir a píxeles de la imagen natural (no escalada)
+  const scaleX = imgEl.naturalWidth / rect.width;
+  const scaleY = imgEl.naturalHeight / rect.height;
+  const px = rx * scaleX;
+  const py = ry * scaleY;
+
+  // normalizados 0..1
+  const nx = px / imgEl.naturalWidth;
+  const ny = py / imgEl.naturalHeight;
+
+  pxX.textContent = px.toFixed(1);
+  pxY.textContent = py.toFixed(1);
+  nxny.textContent = `[${nx.toFixed(4)}, ${ny.toFixed(4)}]`;
+
+  const yaml =
+`${cam}:
+  ${name}:
+    type: manual
+    centroid: [${nx.toFixed(4)}, ${ny.toFixed(4)}]`;
+  yamlOut.value = yaml;
+});
+
+copyBtn.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(yamlOut.value); copyBtn.textContent='¡Copiado!'; setTimeout(()=>copyBtn.textContent='Copiar YAML',900); } catch(e){}
+});
+copyPairBtn.addEventListener('click', async () => {
+  const m = nxny.textContent.trim();
+  try { await navigator.clipboard.writeText(m); copyPairBtn.textContent='¡Copiado!'; setTimeout(()=>copyPairBtn.textContent='Copiar (nx, ny)',900); } catch(e){}
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+columpioscam1:
+  - name: bench_1
+    x: 0.4509
+    y: 0.7043
+    type: manual
+  - name: bench_2
+    x: 0.5528
+    y: 0.2539
+    type: manual
+  - name: seat_block_1
+    x: 0.3095
+    y: 0.8123
+    type: manual
+  - name: seat_block_2
+    x: 0.4344
+    y: 0.8169
+    type: manual
+  - name: seat_block_3
+    # [0.2666, 0.7793]
+    x: 0.2666
+    y: 0.7793
+    type: manual
+  - name: seat_block_4
+    # [0.3919, 0.6744]
+    x: 0.3938
+    y: 0.6797
+    type: manual
+  - name: seat_block_5
+    # [0.4823, 0.3516]
+    x: 0.4823
+    y: 0.3516
+    type: manual
+  - name: seat_block_6
+    # [0.4979, 0.3188]
+    x: 0.4979
+    y: 0.3188
+    type: manual
+  - name: seat_block_7
+    # [0.5744, 0.3254]
+    x: 0.5744
+    y: 0.3254
+    type: manual
+  - name: seat_block_8
+    # [0.7606, 0.2844]
+    x: 0.7606
+    y: 0.2844
+    type: manual
+  - name: seat_block_9
+    # [0.7560, 0.2680]
+    x: 0.7560
+    y: 0.2680
+    type: manual
+
+  - name: generator
+    x: 0.8740
+    y: 0.3385
+    type: manual
+
+  - name: slide
+    x: 0.7127
+    y: 0.3057
+    type: manual
+
+  - name: bench_3
+    x: 0.7127
+    y: 0.3057
+    type: manual
+
+
+columpioscam2:
+  - name: climbing_dome_1
+    # centroid: [0.5615, 0.4958]
+    x: 0.5615
+    y: 0.4958
+    type: manual
+
+  - name: climbing_dome_2
+    x: 0.4592
+    y: 0.6505
+    type: manual
+
+  - name: swing_frame_1
+    x: 0.5170
+    y: 0.4138
+    type: manual
+
+  - name: seat_block_1
+    x: 0.4509
+    y: 0.9344
+    type: manual
+
+  - name: playground_hole_1
+    # centroid: [0.5744, 0.6321]
+    x: 0.5744
+    y: 0.6321
+    type: manual
+
+  - name: playground_hole_2
+    # centroid: [0.3431, 0.5925]
+    x: 0.3431
+    y: 0.5925
+    type: manual
+
+  - name: swing_frame_2
+    # centroid: [0.5403, 0.3713]
+    x: 0.5403
+    y: 0.3713
+    type: manual
+
+columpioscam3:
+  - name: trash_cluster_1
+    # centroid: [0.6878, 0.4224]
+    x: 0.6878
+    y: 0.4224
+    type: manual
+
+  - name: trash_cluster_2
+    # centroid: [0.6924, 0.4319]
+    x: 0.6924
+    y: 0.4319
+    type: manual
+
+  - name: trash_cluster_3
+    # centroid: [0.7016, 0.4414]
+    x: 0.7016
+    y: 0.4414
+    type: manual
+
+  - name: trash_cluster_4
+    # centroid: [0.7118, 0.4499]
+    x: 0.7118
+    y: 0.4499
+    type: manual
+
+  - name: seat_block_0
+    # centroid: [0.0933, 0.6551]
+    x: 0.0933
+    y: 0.6551
+    type: manual
+
+  - name: seat_block_1
+    x: 0.1351
+    y: 0.6315
+    type: manual
+
+  - name: seat_block_2
+    x: 0.6382
+    y: 0.4416
+    type: manual
+
+  - name: seat_block_3
+    # centroid: [0.1486, 0.6099]
+    x: 0.1486
+    y: 0.6099
+    type: manual
+
+  - name: seat_block_4
+    # centroid: [0.1707, 0.5728]
+    x: 0.1707
+    y: 0.5728
+    type: manual
+
+  - name: metal_thing
+    # centroid: [0.2122, 0.5073]
+    x: 0.2122
+    y: 0.5073
+    type: manual
+
+  - name: swing_frame_1
+    x: 0.2389
+    y: 0.4350
+    type: manual
+
+  - name: swing_frame_2
+    # centroid: [0.2002, 0.4352]
+    x: 0.2002
+    y: 0.4352
+    type: manual
+
+  - name: swing_frame_3
+    # centroid: [0.3458, 0.4417]
+    x: 0.3458
+    y: 0.4417
+    type: manual
+
+
+  - name: playground_hole
+    # centroid: [0.5781, 0.3385]
+    x: 0.5781
+    y: 0.3385
+    type: manual
+
+  - name: playground_dome
+    # centroid: [0.5560, 0.3418]
+    x: 0.5560
+    y: 0.3418
+    type: manual
+
+
+columpioscam4:
+  - name: trash_cluster_1
+    # centroid: [0.0536, 0.6007]
+    x: 0.0536
+    y: 0.6007
+    type: manual
+
+  - name: trash_cluster_2
+    # centroid: [0.0702, 0.5958]
+    x: 0.0702
+    y: 0.5958
+    type: manual
+
+  - name: trash_cluster_3
+    # centroid: [0.0905, 0.5974]
+    x: 0.0905
+    y: 0.5974
+    type: manual
+
+  - name: trash_cluster_4
+    # centroid: [0.1099, 0.5938]
+    x: 0.1099
+    y: 0.5938
+    type: manual
+
+  - name: climbing_dome_1
+    # centroid original: [0.6419, 0.4905]
+    x: 0.6419
+    y: 0.4905
+    type: manual
+
+  - name: climbing_dome_2
+    # centroid: [0.8141, 0.5171]
+    x: 0.8141
+    y: 0.5171
+    type: manual
+
+  - name: swing_frame_1
+    # centroid original: [0.4592, 0.4742]
+    x: 0.4592
+    y: 0.4742
+    type: manual
+
+  - name: swing_frame_2
+    # centroid: [0.3615, 0.4876]
+    x: 0.3615
+    y: 0.4876
+    type: manual
+
+  - name: swing_frame_3
+    # centroid: [0.5081, 0.4578]
+    x: 0.5081
+    y: 0.4578
+    type: manual
+
+  - name: swing_frame_4
+    # centroid: [0.4306, 0.4483]
+    x: 0.4306
+    y: 0.4483
+    type: manual
+
+  - name: playground_hole
+    # centroid: [0.8104, 0.5466]
+    x: 0.8104
+    y: 0.5466
+    type: manual
+
+  - name: seat_block_1
+    # centroid original: [0.1572, 0.7467]
+    x: 0.1572
+    y: 0.7467
+    type: manual
+
+    #    centroid: [0.8030, 0.5728]
+  - name: seat_block_2
+    # centroid: [0.4306, 0.4483]
+    x: 0.8030
+    y: 0.5728
+    type: manual
+
+  - name: seat_block_3
+    # centroid: [0.8279, 0.5856]
+    x: 0.8279
+    y: 0.5856
+    type: manual

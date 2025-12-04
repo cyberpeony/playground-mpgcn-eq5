@@ -1,0 +1,32 @@
+sample_id,path,label,camera
+columpioscam1-2024-11-14 20:19:55_0_Transit,panoramic_npy/columpioscam1-2024-11-14 20:19:55_0_Transit.npy,Transit,columpioscam1
+columpioscam2-2024-09-25 15:12:14_0_Transit,panoramic_npy/columpioscam2-2024-09-25 15:12:14_0_Transit.npy,Transit,columpioscam2
+columpios_cam4-2024-11-14 06:55:57_0_Transit,panoramic_npy/columpios_cam4-2024-11-14 06:55:57_0_Transit.npy,Transit,columpioscam4
+columpios_cam4-2024-11-14 16:58:58_0_Transit,panoramic_npy/columpios_cam4-2024-11-14 16:58:58_0_Transit.npy,Transit,columpioscam4
+columpios_cam4-2024-11-16 20:26:22_0_Transit,panoramic_npy/columpios_cam4-2024-11-16 20:26:22_0_Transit.npy,Transit,columpioscam4
+columpioscam1-2024-11-14 21:27:11_0_Transit,panoramic_npy/columpioscam1-2024-11-14 21:27:11_0_Transit.npy,Transit,columpioscam1
+columpioscam1-2024-11-21 19:06:22_0_Transit,panoramic_npy/columpioscam1-2024-11-21 19:06:22_0_Transit.npy,Transit,columpioscam1
+columpioscam1-2025-01-07_19-40-29_0_Transit,panoramic_npy/columpioscam1-2025-01-07_19-40-29_0_Transit.npy,Transit,columpioscam1
+columpios_cam4-2024-09-25 17:23:36_0_Transit,panoramic_npy/columpios_cam4-2024-09-25 17:23:36_0_Transit.npy,Transit,columpioscam4
+columpios_cam4-2024-11-14 21:16:08_0_Transit,panoramic_npy/columpios_cam4-2024-11-14 21:16:08_0_Transit.npy,Transit,columpioscam4
+columpioscam3-2024-11-17 20:06:05_0_Social_People,panoramic_npy/columpioscam3-2024-11-17 20:06:05_0_Social_People.npy,Social_People,columpioscam3
+columpioscam3-2024-09-25 21:23:31_0_Social_People,panoramic_npy/columpioscam3-2024-09-25 21:23:31_0_Social_People.npy,Social_People,columpioscam3
+columpioscam1-2024-11-11 19:58:02_0_Social_People,panoramic_npy/columpioscam1-2024-11-11 19:58:02_0_Social_People.npy,Social_People,columpioscam1
+columpios_cam4-2024-11-17 20:55:02_0_Social_People,panoramic_npy/columpios_cam4-2024-11-17 20:55:02_0_Social_People.npy,Social_People,columpioscam4
+columpioscam1-2024-11-17 20:57:17_0_Social_People,panoramic_npy/columpioscam1-2024-11-17 20:57:17_0_Social_People.npy,Social_People,columpioscam1
+columpioscam1-2024-11-14 19:26:01_1_Social_People,panoramic_npy/columpioscam1-2024-11-14 19:26:01_1_Social_People.npy,Social_People,columpioscam1
+columpioscam2-2024-11-16 20:24:25_0_Social_People,panoramic_npy/columpioscam2-2024-11-16 20:24:25_0_Social_People.npy,Social_People,columpioscam2
+columpioscam2-2024-11-17 20:53:59_0_Social_People,panoramic_npy/columpioscam2-2024-11-17 20:53:59_0_Social_People.npy,Social_People,columpioscam2
+columpioscam1-2024-11-11 19:39:44_0_Social_People,panoramic_npy/columpioscam1-2024-11-11 19:39:44_0_Social_People.npy,Social_People,columpioscam1
+columpioscam2-2024-11-17 18:44:39_0_Social_People,panoramic_npy/columpioscam2-2024-11-17 18:44:39_0_Social_People.npy,Social_People,columpioscam2
+columpioscam2-2024-11-17 18:42:00_0_Play_Object_Normal,panoramic_npy/columpioscam2-2024-11-17 18:42:00_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam2
+columpios_cam4-2024-09-28 19:07:47_0_Play_Object_Normal,panoramic_npy/columpios_cam4-2024-09-28 19:07:47_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam4
+columpioscam2-2024-09-25 20:46:44_0_Play_Object_Normal,panoramic_npy/columpioscam2-2024-09-25 20:46:44_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam2
+columpioscam1-2024-10-22 18:37:00_0_Play_Object_Normal,panoramic_npy/columpioscam1-2024-10-22 18:37:00_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam1
+columpioscam2-2024-11-17 21:48:14_0_Play_Object_Normal,panoramic_npy/columpioscam2-2024-11-17 21:48:14_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam2
+columpioscam2-2024-11-16 20:09:41_0_Play_Object_Normal,panoramic_npy/columpioscam2-2024-11-16 20:09:41_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam2
+columpioscam3-2024-11-14 19:14:30_0_Play_Object_Normal,panoramic_npy/columpioscam3-2024-11-14 19:14:30_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam3
+columpioscam2-2024-11-16 20:54:55_0_Play_Object_Normal,panoramic_npy/columpioscam2-2024-11-16 20:54:55_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam2
+columpioscam2-2024-11-14 19:26:15_0_Play_Object_Normal,panoramic_npy/columpioscam2-2024-11-14 19:26:15_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam2
+columpioscam3-2024-10-03 16:05:10_0_Play_Object_Normal,panoramic_npy/columpioscam3-2024-10-03 16:05:10_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam3
+columpioscam1-2024-11-11 18:54:30_0_Play_Object_Normal,panoramic_npy/columpioscam1-2024-11-11 18:54:30_0_Play_Object_Normal.npy,Play_Object_Normal,columpioscam1
