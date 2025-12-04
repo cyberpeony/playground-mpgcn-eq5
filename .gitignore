@@ -94,3 +94,5 @@ tmp_*/
 *.tar.gz
 
 .DS_Store
+
+manifest.txt
