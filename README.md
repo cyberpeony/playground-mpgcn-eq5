@@ -1,88 +1,197 @@
-# Reto — Escenas de playground usando **MP-GCN** 
+# MP-GCN Playground Pipeline — Equipo 5
 
-## ¿Qué haremos y por qué?
-
-Clasificar **una etiqueta por escena** en escenas de playground (`Transit`, `Social_People`, `Play_Object_Normal`, `Play_Object_Risk`, `Adult_Assisting`, `Negative_Contact`) usando **esqueletos 2D** y un **grafo panorámico** persona–objeto (**MP-GCN**).
-MP-GCN modela **interacciones**: *intra-persona* (topología del cuerpo), *persona↔objeto* (manos↔columpio/lomas) y *inter-persona* (pelvis↔pelvis). Es **ligero**, **privado** y capta mejor **riesgo/uso del mobiliario** que un modelo por-persona con atención.
-
-* **Repo de referencia:** [MP-GCN](https://github.com/mgiant/MP-GCN) 
-* **Paper:** ["Skeleton-based Group Activity Recognition via Spatial-Temporal Panoramic Graph"](https://link.springer.com/chapter/10.1007/978-3-031-73202-7_15)
+Este repositorio contiene el pipeline completo para clasificar actividades humanas en un parque infantil utilizando un modelo **MP-GCN (Multi-Plane Graph Convolutional Network)**.  
+El sistema procesa exclusivamente datos estructurados (poses, bounding boxes y relaciones humano–objeto) para predecir una de tres clases de actividad.
 
 ---
 
-## Reglas prácticas 
+## 1. Objetivo del Proyecto
 
-* **FPS de proceso:** 12 → **T**≈60 (muestrea a **T=48** para el modelo)
-* **K\_max personas por ventana:** 4
-* **Forma de entrada (feeder estilo ST-GCN/MP-GCN):** `X ∈ [C, T, V', M]`
+Clasificar cada segmento de video panorámico en una de las siguientes categorías:
 
-  * `V' = 17 + n_obj` (joints humanos + **centroides** de objetos por cámara)
-  * **Streams:** `J` (joints), `B` (bones), `JM=ΔJ`, `BM=ΔB`
-  * **Adyacencias:** `A0` (self), `A_intra` (humano + **obj↔manos**), `A_inter` (**pelvis↔pelvis**)
+1. **Transit** — Personas caminando o desplazándose sin interacción relevante.  
+2. **Social_People** — Interacciones sociales entre personas.  
+3. **Play_Object_Normal** — Actividades de juego que involucran objetos.
 
----
-
-## Plan sugerido
-
-### ✅ **Réplica el paper (3 semanas)**
-
-**Objetivo:** entender MP-GCN y su *feeder* antes de tocar nuestro dato.
-
-* Leer el **paper** (idea del grafo, 4 streams) y el **README** del repo.
-* Clonar repo, crear ambiente e **instalar** dependencias.
-* **Preparar** un dataset público (Volleyball / NBA; opcional **Kinetics-400** vía `pyskl`) como indica el repo.
-* **Entrenar o inferir** con el *config* del repo y **reportar** Top-1/matriz de confusión.
-* **Entender shapes** del *feeder* (`[C,T,V',M]`) e imprimirlos en un notebook.
-
-**Entregables**
-
-* Notebook “hello\_mpgcn.ipynb” (instalación + inferencia/entreno corto + shapes)
+El modelo trabaja sin pixeles, empleando un grafo humano–objeto por frame y un MP-GCN multi-stream para capturar información temporal.
 
 ---
 
-### ✅ Pipeline Playground (3 semanas)**
+## 2. Arquitectura: Multi-Stream MP-GCN
 
-**Objetivo:** construir los **inputs panorámicos** a partir de nuestros videos.
+El sistema usa **4 streams**:
 
-* **Filtrar videos** (ROI) usando el notebook de la base de datos (PostGIS) y **seleccionar ≥100 escenas**:
-  `video_id,camera,t_start,t_end,blob_path`
+- **J** — Coordenadas 2D de joints  
+- **B** — Bounding boxes  
+- **JM** — Motion de joints  
+- **BM** — Motion de bounding boxes  
 
-  > Puedes **prefiltrar** con el **VLM** y/o con el **# de detecciones** de la DB.
-* **Esqueletos + tracking ligero** (YOLO/RTM-pose + ByteTrack/DeepSORT) en esas ventanas; **normalizar** por persona (cadera al origen, escala por torso).
-  Guardar por ventana: **`[T,K_max,17,2]`**.
-* **Objetos por cámara**: anotar manualmente **centroides** (0..1) de columpios/lomas en `configs/objects.yaml`.
-* **Grafo panorámico**:
+Cada muestra tiene dimensiones: [C=2, T=48, V=32 nodos, M=4 personas]
 
-  * Expandir **`V → V' = 17 + n_obj`** (replicar centroides por frame/persona)
-  * Añadir aristas **obj↔manos** (intra) y **pelvis↔pelvis** (inter)
-  * Generar **`J/B/JM/BM`** y matrices **`A0/A_intra/A_inter`**
-  * **Probar un forward** con el *feeder* del repo (batch pequeño)
 
-**Entregables**
+Los nodos del grafo incluyen:
 
-* `data/videos.csv` (≥100 filas)
-* `data/npy/*.npy` o `.npz` por ventana (`[T,K_max,17,2]` normalizados)
-* `configs/objects.yaml` (centroides por cámara)
-* Script/función **`build_panoramic_graph`** y evidencia de **forward OK**
+- 17 joints humanos  
+- Hasta 15 objetos  
+- Aristas intra-humano, intra-objeto y humano–objeto  
+
+Las matrices de adyacencia se construyen automáticamente con: A0, A_intra, A_inter → [3, 32, 32]
+
 
 ---
 
-### ✅ **Etiquetado, entrenamiento y resultados (4 semanas)**
+## 3. Dataset y Splits
 
-**Objetivo:** adaptar MP-GCN a playground y mostrar valor del grafo persona–objeto.
-
-* **Etiquetado automático con VLM** → *scores por clase* → **argmax**; guardar `conf_weight = score_max` y aplicar **CORE-CLEAN** (p. ej., `score ≥ 0.8`).
-  *(Si no usan VLM: curado humano ligero de 3–5 clases clave).*
-* **Entrenamiento ligero**: congelar gran parte del backbone y entrenar cabezas/capas.
+Los splits se generan con: python build_train_val_csv.py
 
 
-**Entregables**
+Distribución final:
 
-* `train.csv` / `val.csv` (single-label; si VLM: con `conf_weight`)
-* Checkpoint + **métricas**
-* **Reporte** (2–4 páginas)
+| Clase               | Total | Train | Val | Test |
+|--------------------|-------|-------|-----|------|
+| Transit            | 71    | 50    | 11  | 10   |
+| Social_People      | 71    | 50    | 11  | 10   |
+| Play_Object_Normal | 70    | 49    | 10  | 11   |
+
+Total test: **31 muestras**
+
+Los archivos `.npy` con el panorama vectorizado se almacenan en `data/panoramic_npy/` (**no versionados en Git**).
 
 ---
+
+## 4. Entrenamiento
+
+Entrenamiento del modelo: python video_processing/train_mpgcn.py
+
+
+Parámetros principales:
+
+- Épocas: 40  
+- Batch size: 4  
+- Optimizador: Adam (lr=1e-3, weight_decay=1e-4)  
+- Seed: 7  
+- `use_att=False` (atención desactivada)
+
+### Mejor resultado en validación
+Validation Accuracy = 71.9 %
+
+
+Checkpoint guardado en: checkpoints/mpgcn_playground_best.pth
+
+
+---
+
+## 5. Evaluación en Test
+
+Ejecutar: python video_processing/eval_mpgcn.py
+
+
+Resultado global: Test Accuracy = 48.39 %
+
+
+---
+
+## 6. Métricas Detalladas
+
+Generar métricas: python video_processing/analyze_test_results.py
+
+
+### Accuracy por clase
+
+| Clase               | Accuracy |
+|--------------------|----------|
+| Transit            | 40.00%   |
+| Social_People      | 30.00%   |
+| Play_Object_Normal | 72.73%   |
+
+### Classification Report
+precision recall f1-score support
+Transit 0.4444 0.4000 0.4211 10
+Social_People 0.3333 0.3000 0.3158 10
+Play_Object_Normal 0.6154 0.7273 0.6667 11
+accuracy 0.4839 31
+macro avg 0.4644 0.4758 0.4678 31
+weighted avg 0.4693 0.4839 0.4743 31
+
+
+### Matriz de confusión
+[[4 5 1]
+[3 3 4]
+[2 1 8]]
+
+
+Imagen generada: `confusion_matrix_test.png`
+
+---
+
+## 7. Interpretación de Resultados
+
+- El modelo es más fuerte en **Play_Object_Normal**, donde existen objetos que actúan como nodos adicionales y facilitan la discriminación.
+- Las clases **Transit** y **Social_People** se confunden entre sí, lo cual es coherente: comparten patrones cinemáticos muy similares y carecen de objetos distintivos.
+- La diferencia entre validación (71.9%) y test (48.39%) es un indicio de overfitting esperado por el tamaño reducido del dataset.
+- Con más datos sociales y de tránsito, el rendimiento debería aumentar significativamente.
+
+---
+
+## 8. Cómo Ejecutar Todo el Pipeline
+
+### 1. Construir splits
+python build_train_val_csv.py
+
+
+### 2. Entrenar MP-GCN
+python video_processing/train_mpgcn.py
+
+
+### 3. Evaluar en test
+python video_processing/eval_mpgcn.py
+
+
+### 4. Generar métricas y gráficas
+python video_processing/analyze_test_results.py
+
+
+---
+
+## 9. `.gitignore` Recomendado (incluido)
+
+Ignora:
+
+- `data/panoramic_npy/*.npy`
+- `data/raw_videos/*.mp4`
+- `checkpoints/`
+- `*.pt`, `*.pth`
+- Entornos virtuales
+- Archivos temporales
+
+---
+
+## 10. Trabajo a mejorar 
+
+- Activar atención en MP-GCN para modelar relaciones espaciales finas  
+- Añadir data augmentation para trayectorias y cajas  
+- Incorporar distancias interpersonales como features adicionales  
+- Expandir el dataset para reducir la variancia del modelo  
+
+---
+
+## 11. Autores
+
+Este proyecto fue desarrollado por:
+- **Carlos Alberto Mentado Reyes** — A01276065  
+- **Fernanda Díaz Gutiérrez** — A01639572  
+- **José Eduardo Puentes Martínez** — A01733177  
+- **Raymundo Iván Díaz Alejandre** — A01735644  
+
+Tecnológico de Monterrey  
+Curso: IA Avanzada
+
+
+
+
+
+
+
 
 
 
