@@ -95,4 +95,4 @@ tmp_*/
 
 .DS_Store
 
-.manifest.txt
+/manifest.txt
