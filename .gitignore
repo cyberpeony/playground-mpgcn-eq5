@@ -92,3 +92,5 @@ tmp_*/
 *.zip
 *.tar
 *.tar.gz
+
+.DS_Store
