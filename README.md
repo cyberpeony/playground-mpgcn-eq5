@@ -5,6 +5,11 @@ El sistema procesa exclusivamente datos estructurados (poses, bounding boxes y r
 
 ---
 
+## 0. Documentación
+Nota: Toda la documentación formal del proyecto se encuentra en la carpeta docs/:
+- docs/Reporte_Final_MPGCN_Playground.pdf — Reporte técnico completo con metodología, arquitectura, resultados y conclusiones.
+- docs/Presentacion_Final_E5.pdf — Presentación utilizada en la evaluación final del proyecto.
+
 ## 1. Objetivo del Proyecto
 
 Clasificar cada segmento de video panorámico en una de las siguientes categorías:
