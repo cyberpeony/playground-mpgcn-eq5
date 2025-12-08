@@ -181,97 +181,97 @@ Durante el desarrollo del proyecto recibimos retroalimentación en distintas act
 ### Correcciones del módulo: Big Data
 
 Retroalimentación:
-	El dataset original tenía desequilibrio fuerte entre clases, con muchas escenas de Transit y Social, pero muy pocas de otras categorías.
-	•	Algunas clases eran tan pequeñas que no permitían un entrenamiento útil.
-	•	Se pidió revisar la viabilidad del dataset y plantear una estrategia de reducción o reagrupación.
+- El dataset original tenía desequilibrio fuerte entre clases, con muchas escenas de Transit y Social, pero muy pocas de otras categorías.
+- Algunas clases eran tan pequeñas que no permitían un entrenamiento útil.
+- Se pidió revisar la viabilidad del dataset y plantear una estrategia de reducción o reagrupación.
 
 Correcciones aplicadas:
-	Se redujo el problema a 3 clases balanceables: Transit, Social_People, Play_Object_Normal.
-	•	Se descartaron clases con muy pocas muestras (<20).
-	•	Se reconstruyó el dataset final solo con escenas limpias y utilizables, resultando en ~213 videos válidos.
-	•	Se generaron ventanas uniformes de 48 frames para homogenizar las muestras.
-⸻
+- Se redujo el problema a 3 clases balanceables: Transit, Social_People, Play_Object_Normal.
+- Se descartaron clases con muy pocas muestras (<20).
+- Se reconstruyó el dataset final solo con escenas limpias y utilizables, resultando en ~213 videos válidos.
+- Se generaron ventanas uniformes de 48 frames para homogenizar las muestras.
+---
 
 ### Correcciones del módulo: Arquitecturas de Deep Learning
 
 Retroalimentación recibida:
-	•	Faltaba justificar la elección de MP-GCN.
-	•	Nodos y aristas mal definidos en la versión inicial.
-	•	Faltaba explicación de los streams J, B, JM, BM.
+- Faltaba justificar la elección de MP-GCN.
+- Nodos y aristas mal definidos en la versión inicial.
+- Faltaba explicación de los streams J, B, JM, BM.
 
 Correcciones aplicadas:
-		•	Se formalizó la definición del grafo panorámico con 32 nodos: 17 joints + ~15 objetos.
-	•	Se corrigió y documentó la creación de:
-	•	A₀ (intra-persona)
-	•	A_intra (persona–objeto)
-	•	A_inter (persona–persona)
-	•	Se añadieron ecuaciones claras en el reporte y las slides.
-	•	Se explicó correctamente la forma tensorial: [C, T, V, M].
-⸻
+- Se formalizó la definición del grafo panorámico con 32 nodos: 17 joints + ~15 objetos.
+- Se corrigió y documentó la creación de:
+- A₀ (intra-persona)
+- A_intra (persona–objeto)
+- A_inter (persona–persona)
+- Se añadieron ecuaciones claras en el reporte y las slides.
+- Se explicó correctamente la forma tensorial: [C, T, V, M].
+---
 
 ### Correcciones del módulo: Estadística Avanzada
 
 Retroalimentación recibida:
-	•	Faltaban métricas completas y análisis del modelo.
-	•	No se había generado matriz de confusión.
+- Faltaban métricas completas y análisis del modelo.
+- No se había generado matriz de confusión.
 
 Correcciones aplicadas:
-	•	Se generó classification report, incluyendo precision, recall y F1.
-	•	Se añadió una matriz de confusión interpretada por clase.
-	•	Se explicó la brecha entre validación (71%) y test (48%), asociándola al tamaño reducido del test set y al riesgo de overfitting.
-⸻
+- Se generó classification report, incluyendo precision, recall y F1.
+- Se añadió una matriz de confusión interpretada por clase.
+- Se explicó la brecha entre validación (71%) y test (48%), asociándola al tamaño reducido del test set y al riesgo de overfitting.
+---
 
 ### Correcciones del módulo: Cómputo en la Nube
 
 Retroalimentación recibida:
-	•	Faltaba reproducibilidad en el pipeline.
-	•	.gitignore incompleto y mezcla de datos + código.
+- Faltaba reproducibilidad en el pipeline.
+- .gitignore incompleto y mezcla de datos + código.
 
 Correcciones aplicadas:
-	•	Scripts ejecutables para cada fase:
+- Scripts ejecutables para cada fase:
 build_train_val_csv.py, train_mpgcn.py, eval_mpgcn.py, analyze_test_results.py.
-	•	.gitignore actualizado para excluir videos, .npy y checkpoints.
-	•	Reorganización del repositorio en carpetas limpias.
+- .gitignore actualizado para excluir videos, .npy y checkpoints.
+- Reorganización del repositorio en carpetas limpias.
 
-⸻
+---
 
 ### Correcciones del módulo: Reto (Metodología y Gestión)
 
 Retroalimentación recibida:
-	•	Pipeline poco claro para el socio formador.
-	•	Presentación y reporte sin consistencia con la implementación.
+- Pipeline poco claro para el socio formador.
+- Presentación y reporte sin consistencia con la implementación.
 
 Correcciones aplicadas:
-	•	Reescritura completa de la metodología:
+- Reescritura completa de la metodología:
 etiquetado → esqueletos → objetos → grafo → tensores → splits → MP-GCN
-	•	Alineación entre presentación, pipeline del repo y reporte en LaTeX.
-	•	Inclusión de la contribución individual en conclusiones del reporte.
+- Alineación entre presentación, pipeline del repo y reporte en LaTeX.
+- Inclusión de la contribución individual en conclusiones del reporte.
 
-⸻
+---
 
 ### Correcciones del módulo: Técnicas y Arquitecturas de Deep Learning (Refinamiento)
 
 Retroalimentación recibida:
-	•	Se necesitaba refinar el modelo después de la primera iteración.
-	•	El profesor pidió probar otras configuraciones o variantes, no solo el benchmark.
-	•	Validar si activar módulos opcionales (como atención) mejoraba el rendimiento.
+- Se necesitaba refinar el modelo después de la primera iteración.
+- El profesor pidió probar otras configuraciones o variantes, no solo el benchmark.
+- Validar si activar módulos opcionales (como atención) mejoraba el rendimiento.
 
 Correcciones aplicadas:
-	•	Se reentrenó el modelo ajustando hiperparámetros: LR, batch size, weight decay.
-	•	Se probó entrenamiento con y sin módulo de atención (use_att=True/False).
-	•	Se evaluó impacto de normalización corregida y nueva construcción de grafos.
-	•	Se compararon distintas semillas para confirmar estabilidad del resultado.
-	•	Se documentaron los efectos:
-	•	Mejor rendimiento en validación (hasta 71.9%)
-	•	Reducción de pérdida durante entrenamiento
-	•	Mejor comportamiento en Play_Object_Normal
-	•	Se agregó una sección de “Trabajo a futuro” con arquitecturas alternativas sugeridas:
-	•	ST-GCN
-	•	AGCN
-	•	MP-GCN con atención activada
-	•	Multistream con features adicionales
+- Se reentrenó el modelo ajustando hiperparámetros: LR, batch size, weight decay.
+- Se probó entrenamiento con y sin módulo de atención (use_att=True/False).
+- Se evaluó impacto de normalización corregida y nueva construcción de grafos.
+- Se compararon distintas semillas para confirmar estabilidad del resultado.
+- Se documentaron los efectos:
+- Mejor rendimiento en validación (hasta 71.9%)
+- Reducción de pérdida durante entrenamiento
+- Mejor comportamiento en Play_Object_Normal
+- Se agregó una sección de “Trabajo a futuro” con arquitecturas alternativas sugeridas:
+- ST-GCN
+- AGCN
+- MP-GCN con atención activada
+- Multistream con features adicionales
 
-⸻
+---
 
 ## 12. Autores
 
